@@ -3,22 +3,30 @@ admin      0.000GB
 config     0.000GB
 ecommerce  0.000GB
 local      0.000GB
+
 > use ecommerce
 switched to db ecommerce
+
 > show collections
 personas
 > db.personas.drop()
+
 true
 > show collections
+
 > use ecommerce
 switched to db ecommerce
+
 > db.createCollection("mensajes")
 { "ok" : 1 }
+
 > db.createCollection("productos")
 { "ok" : 1 }
+
 > show collections
 mensajes
 productos
+
 > db.productos.insert([
 ...     { nombre: 'escuadra', descripcion: 'verde'}
 ...     { nombre: 'goma', descripcion: 'blanca maped'}
@@ -55,6 +63,7 @@ BulkWriteResult({
         "nRemoved" : 0,
         "upserted" : [ ]
 })
+
 > db.mensajes.insert([
 ...     { mensaje1: 'mensaje 1'},
 ...     { mensaje2: 'mensaje 2'},
@@ -77,4 +86,149 @@ BulkWriteResult({
         "nRemoved" : 0,
         "upserted" : [ ]
 })
+
+> show collections
+mensajes
+productos
+
+> db.productos.find()
+{ "_id" : ObjectId("627497165f0f7161ffa2217f"), "nombre" : "escuadra", "descripcion" : "verde" }
+{ "_id" : ObjectId("627497165f0f7161ffa22180"), "nombre" : "goma", "descripcion" : "blanca maped" }
+{ "_id" : ObjectId("627497165f0f7161ffa22181"), "nombre" : "lapiz", "descripcion" : "h1" }
+{ "_id" : ObjectId("627497165f0f7161ffa22182"), "nombre" : "lapicera", "descripcion" : "roller" }
+{ "_id" : ObjectId("627497165f0f7161ffa22183"), "nombre" : "regla", "descripcion" : "30cm" }
+{ "_id" : ObjectId("627497165f0f7161ffa22184"), "nombre" : "transportador", "descripcion" : "azul" }
+{ "_id" : ObjectId("627497165f0f7161ffa22185"), "nombre" : "saca punta", "descripcion" : "metalico" }
+{ "_id" : ObjectId("627497165f0f7161ffa22186"), "nombre" : "plasticola", "descripcion" : "pegamento" }
+{ "_id" : ObjectId("627497165f0f7161ffa22187"), "nombre" : "cuaderno", "descripcion" : "tapa dura" }
+{ "_id" : ObjectId("627497165f0f7161ffa22188"), "nombre" : "carpeta", "descripcion" : "A3" }
+
+> db.productos.remove({})
+WriteResult({ "nRemoved" : 10 })
+
+> db.productos.insert([)
+...     { nombre: 'escuadra', descripcion: 'verde', precio: 120},
+...     { nombre: 'goma', descripcion: 'blanca maped', precio: 135},
+...     { nombre: 'lapiz', descripcion: 'h1', precio: 415},
+...     { nombre: 'lapicera', descripcion: 'roller', precio: 238},
+...     { nombre: 'regla', descripcion: '30cm', precio: 347},
+...     { nombre: 'transportador', descripcion: 'azul', precio: 1000},
+...     { nombre: 'saca punta', descripcion: 'metalico', precio: 4000},
+...     { nombre: 'plasticola', descripcion: 'pegamento', precio: 500},
+...     { nombre: 'cuaderno', descripcion: 'tapa dura', precio: 450},
+...     { nombre: 'carpeta', descripcion: 'A3', precio: 2000},
+... ])
+uncaught exception: SyntaxError: expected expression, got ')' :
+@(shell):1:21
+> db.productos.insert([    { nombre: 'escuadra', descripcion: 'verde', precio: 120},     { nombre: 'goma', descripcion: 'blanca maped', precio: 135},     { nombre: 'lapiz', descripcion: 'h1', precio: 415},     { nombre: 'lapicera', descripcion: 'roller', precio: 238},     { nombre: 'regla', descripcion: '30cm', precio: 347},     { nombre: 'transportador', descripcion: 'azul', precio: 1000},     { nombre: 'saca punta', descripcion: 'metalico', precio: 4000},     { nombre: 'plasticola', descripcion: 'pegamento', precio: 500},     { nombre: 'cuaderno', descripcion: 'tapa dura', precio: 450},     { nombre: 'carpeta', descripcion: 'A3', precio: 2000}, ])
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 10,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+
+> db.productos.find()
+{ "_id" : ObjectId("627541ac59980cd1d0d376d8"), "nombre" : "escuadra", "descripcion" : "verde", "precio" : 120 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376d9"), "nombre" : "goma", "descripcion" : "blanca maped", "precio" : 135 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376da"), "nombre" : "lapiz", "descripcion" : "h1", "precio" : 415 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376db"), "nombre" : "lapicera", "descripcion" : "roller", "precio" : 238 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376dc"), "nombre" : "regla", "descripcion" : "30cm", "precio" : 347 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376dd"), "nombre" : "transportador", "descripcion" : "azul", "precio" : 1000 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376de"), "nombre" : "saca punta", "descripcion" : "metalico", "precio" : 4000 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376df"), "nombre" : "plasticola", "descripcion" : "pegamento", "precio" : 500 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e0"), "nombre" : "cuaderno", "descripcion" : "tapa dura", "precio" : 450 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e1"), "nombre" : "carpeta", "descripcion" : "A3", "precio" : 2000 }
+
+> db.mensajes.find()
+{ "_id" : ObjectId("6274987f5f0f7161ffa22189"), "mensaje1" : "mensaje 1" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218a"), "mensaje2" : "mensaje 2" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218b"), "mensaje3" : "mensaje 3" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218c"), "mensaje4" : "mensaje 4" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218d"), "mensaje5" : "mensaje 5" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218e"), "mensaje6" : "mensaje 6" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218f"), "mensaje7" : "mensaje 7" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22190"), "mensaje8" : "mensaje 8" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22191"), "mensaje9" : "mensaje 9" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22192"), "mensaje10" : "mensaje 10" }
+
+> db.productos.estimatedDocumentCount()
+10
+
+> db.mensajes.estimatedDocumentCount()
+10
+
+> db.productos.insertOne({ nombre: 'cartuchera', descripcion: '1 cierre', precio: 2455})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("6275432359980cd1d0d376e2")
+}
+> db.productos.find()
+{ "_id" : ObjectId("627541ac59980cd1d0d376d8"), "nombre" : "escuadra", "descripcion" : "verde", "precio" : 120 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376d9"), "nombre" : "goma", "descripcion" : "blanca maped", "precio" : 135 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376da"), "nombre" : "lapiz", "descripcion" : "h1", "precio" : 415 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376db"), "nombre" : "lapicera", "descripcion" : "roller", "precio" : 238 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376dc"), "nombre" : "regla", "descripcion" : "30cm", "precio" : 347 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376dd"), "nombre" : "transportador", "descripcion" : "azul", "precio" : 1000 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376de"), "nombre" : "saca punta", "descripcion" : "metalico", "precio" : 4000 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376df"), "nombre" : "plasticola", "descripcion" : "pegamento", "precio" : 500 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e0"), "nombre" : "cuaderno", "descripcion" : "tapa dura", "precio" : 450 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e1"), "nombre" : "carpeta", "descripcion" : "A3", "precio" : 2000 }
+{ "_id" : ObjectId("6275432359980cd1d0d376e2"), "nombre" : "cartuchera", "descripcion" : "1 cierre", "precio" : 2455 }
+> db.mensajes.insertOne({ mensaje11: 'mensaje 11'})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("6275436959980cd1d0d376e3")
+}
+
+
+> db.mensajes.find()
+{ "_id" : ObjectId("6274987f5f0f7161ffa22189"), "mensaje1" : "mensaje 1" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218a"), "mensaje2" : "mensaje 2" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218b"), "mensaje3" : "mensaje 3" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218c"), "mensaje4" : "mensaje 4" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218d"), "mensaje5" : "mensaje 5" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218e"), "mensaje6" : "mensaje 6" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218f"), "mensaje7" : "mensaje 7" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22190"), "mensaje8" : "mensaje 8" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22191"), "mensaje9" : "mensaje 9" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22192"), "mensaje10" : "mensaje 10" }
+{ "_id" : ObjectId("6275436959980cd1d0d376e3"), "mensaje11" : "mensaje 11" }
+>
+
+
+> db.productos.find({precio:{$lt:1000}})
+{ "_id" : ObjectId("627541ac59980cd1d0d376d8"), "nombre" : "escuadra", "descripcion" : "verde", "precio" : 120 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376d9"), "nombre" : "goma", "descripcion" : "blanca maped", "precio" : 135 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376da"), "nombre" : "lapiz", "descripcion" : "h1", "precio" : 415 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376db"), "nombre" : "lapicera", "descripcion" : "roller", "precio" : 238 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376dc"), "nombre" : "regla", "descripcion" : "30cm", "precio" : 347 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376df"), "nombre" : "plasticola", "descripcion" : "pegamento", "precio" : 500 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e0"), "nombre" : "cuaderno", "descripcion" : "tapa dura", "precio" : 450 }
+>
+
+> db.productos.find({$and:[{precio:{$gt:1000}}, {precio:{$lt:3000}}]})
+{ "_id" : ObjectId("627541ac59980cd1d0d376e1"), "nombre" : "carpeta", "descripcion" : "A3", "precio" : 2000 }
+{ "_id" : ObjectId("6275432359980cd1d0d376e2"), "nombre" : "cartuchera", "descripcion" : "1 cierre", "precio" : 2455 }
+>
+
+> db.productos.find({precio:{$gt:3000}})
+{ "_id" : ObjectId("627541ac59980cd1d0d376de"), "nombre" : "saca punta", "descripcion" : "metalico", "precio" : 4000 }
+>
+
+> db.productos.find({precio:{$lt:3000}},{"nombre":1,"_id":0})
+{ "nombre" : "escuadra" }
+{ "nombre" : "goma" }
+{ "nombre" : "lapiz" }
+{ "nombre" : "lapicera" }
+{ "nombre" : "regla" }
+{ "nombre" : "transportador" }
+{ "nombre" : "plasticola" }
+{ "nombre" : "cuaderno" }
+{ "nombre" : "carpeta" }
+{ "nombre" : "cartuchera" }
 >
