@@ -185,7 +185,6 @@ BulkWriteResult({
         "insertedId" : ObjectId("6275436959980cd1d0d376e3")
 }
 
-
 > db.mensajes.find()
 { "_id" : ObjectId("6274987f5f0f7161ffa22189"), "mensaje1" : "mensaje 1" }
 { "_id" : ObjectId("6274987f5f0f7161ffa2218a"), "mensaje2" : "mensaje 2" }
@@ -199,7 +198,6 @@ BulkWriteResult({
 { "_id" : ObjectId("6274987f5f0f7161ffa22192"), "mensaje10" : "mensaje 10" }
 { "_id" : ObjectId("6275436959980cd1d0d376e3"), "mensaje11" : "mensaje 11" }
 >
-
 
 > db.productos.find({precio:{$lt:1000}})
 { "_id" : ObjectId("627541ac59980cd1d0d376d8"), "nombre" : "escuadra", "descripcion" : "verde", "precio" : 120 }
@@ -232,3 +230,281 @@ BulkWriteResult({
 { "nombre" : "carpeta" }
 { "nombre" : "cartuchera" }
 >
+
+> db.productos.find({precio:{$lt:5000}},{"nombre":1}).skip(2).limit(1).sort({precio:1})
+{ "_id" : ObjectId("627541ac59980cd1d0d376db"), "nombre" : "lapicera" }
+>
+
+> db.productos.updateMany({},{$set:{"stock":100}})
+{ "acknowledged" : true, "matchedCount" : 11, "modifiedCount" : 11 }
+> db.prodcutos.find()
+> db.productos.find()
+{ "_id" : ObjectId("627541ac59980cd1d0d376d8"), "nombre" : "escuadra", "descripcion" : "verde", "precio" : 120, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376d9"), "nombre" : "goma", "descripcion" : "blanca maped", "precio" : 135, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376da"), "nombre" : "lapiz", "descripcion" : "h1", "precio" : 415, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376db"), "nombre" : "lapicera", "descripcion" : "roller", "precio" : 238, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376dc"), "nombre" : "regla", "descripcion" : "30cm", "precio" : 347, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376dd"), "nombre" : "transportador", "descripcion" : "azul", "precio" : 1000, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376de"), "nombre" : "saca punta", "descripcion" : "metalico", "precio" : 4000, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376df"), "nombre" : "plasticola", "descripcion" : "pegamento", "precio" : 500, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e0"), "nombre" : "cuaderno", "descripcion" : "tapa dura", "precio" : 450, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e1"), "nombre" : "carpeta", "descripcion" : "A3", "precio" : 2000, "stock" : 100 }
+{ "_id" : ObjectId("6275432359980cd1d0d376e2"), "nombre" : "cartuchera", "descripcion" : "1 cierre", "precio" : 2455, "stock" : 100 }
+>
+
+CAMBIO DE PRECIOS A PRODUCTOS CON PRECIOS MAYORES A 1000 (NO TENGO PRODUCTOS CON PRECIO MAYOR A 4000)
+> db.productos.updateMany({precio:{$gt:1000}},{$set:{"stock": 0}})
+{ "acknowledged" : true, "matchedCount" : 3, "modifiedCount" : 3 }
+> db.productos.find()
+{ "_id" : ObjectId("627541ac59980cd1d0d376d8"), "nombre" : "escuadra", "descripcion" : "verde", "precio" : 120, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376d9"), "nombre" : "goma", "descripcion" : "blanca maped", "precio" : 135, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376da"), "nombre" : "lapiz", "descripcion" : "h1", "precio" : 415, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376db"), "nombre" : "lapicera", "descripcion" : "roller", "precio" : 238, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376dc"), "nombre" : "regla", "descripcion" : "30cm", "precio" : 347, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376dd"), "nombre" : "transportador", "descripcion" : "azul", "precio" : 1000, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376de"), "nombre" : "saca punta", "descripcion" : "metalico", "precio" : 4000, "stock" : 0 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376df"), "nombre" : "plasticola", "descripcion" : "pegamento", "precio" : 500, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e0"), "nombre" : "cuaderno", "descripcion" : "tapa dura", "precio" : 450, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e1"), "nombre" : "carpeta", "descripcion" : "A3", "precio" : 2000, "stock" : 0 }
+{ "_id" : ObjectId("6275432359980cd1d0d376e2"), "nombre" : "cartuchera", "descripcion" : "1 cierre", "precio" : 2455, "stock" : 0 }
+>
+
+> db.productos.deleteMany({precio:{$lt:1000}})
+{ "acknowledged" : true, "deletedCount" : 7 }
+> db.productos.find()
+{ "_id" : ObjectId("627541ac59980cd1d0d376dd"), "nombre" : "transportador", "descripcion" : "azul", "precio" : 1000, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376de"), "nombre" : "saca punta", "descripcion" : "metalico", "precio" : 4000, "stock" : 0 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e1"), "nombre" : "carpeta", "descripcion" : "A3", "precio" : 2000, "stock" : 0 }
+{ "_id" : ObjectId("6275432359980cd1d0d376e2"), "nombre" : "cartuchera", "descripcion" : "1 cierre", "precio" : 2455, "stock" : 0 }
+>
+
+use ecommerce
+swdb.createUser({user:"pepe",pwd:"asd456",roles:[{role:"read",db:"ecommerce"}]})
+Successfully added user: {e",pwd:"asd456",roles:[{role:"read",db:"ecommerce"}]})
+        "user" : "pepe",
+        "roles" : [
+                {
+                        "role" : "read",
+                        "db" : "ecommerce"
+                }
+        ]
+}
+
+> db.createUser({user:"pepe",pwd:"asd456",roles:[{role:"read",db:"ecommerce"}]})
+uncaught exception: Error: couldn't add user: User "pepe@ecommerce" already exists :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+DB.prototype.createUser@src/mongo/shell/db.js:1367:11
+@(shell):1:1
+>
+
+PRUEBA DE PERMISOS DEL USUARIO "PEPE"-----------------------------------------------------------------------------
+mongo -u pepe
+MongoDB shell version v5.0.8
+Enter password:
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("b6bbc92f-340c-46c8-ad3a-752b620a8a35") }
+MongoDB server version: 5.0.8
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+---
+The server generated these startup warnings when booting:
+        2022-05-09T08:45:26.909-03:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+        2022-05-09T08:45:26.909-03:00: This server is bound to localhost. Remote systems will be unable to connect to this server. Start the server with --bind_ip <address> to specify which IP addresses it should serve responses from, or with --bind_ip_all to bind to all interfaces. If this behavior is desired, start the server with --bind_ip 127.0.0.1 to disable this warning
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> show dbs
+admin      0.000GB
+config     0.000GB
+ecommerce  0.000GB
+local      0.000GB
+> use ecommerce
+switched to db ecommerce
+> db.productos.find()
+{ "_id" : ObjectId("627541ac59980cd1d0d376dd"), "nombre" : "transportador", "descripcion" : "azul", "precio" : 1000, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376de"), "nombre" : "saca punta", "descripcion" : "metalico", "precio" : 4000, "stock" : 0 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e1"), "nombre" : "carpeta", "descripcion" : "A3", "precio" : 2000, "stock" : 0 }
+{ "_id" : ObjectId("6275432359980cd1d0d376e2"), "nombre" : "cartuchera", "descripcion" : "1 cierre", "precio" : 2455, "stock" : 0 }
+> db.mensajes.insertOne({ nombre: 'mochila', descripcion: '30 lts', precio: 5000, stock:0})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("627947ea2e2a98184c261f22")
+}
+> db.mensajes.find()
+{ "_id" : ObjectId("6274987f5f0f7161ffa22189"), "mensaje1" : "mensaje 1" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218a"), "mensaje2" : "mensaje 2" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218b"), "mensaje3" : "mensaje 3" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218c"), "mensaje4" : "mensaje 4" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218d"), "mensaje5" : "mensaje 5" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218e"), "mensaje6" : "mensaje 6" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218f"), "mensaje7" : "mensaje 7" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22190"), "mensaje8" : "mensaje 8" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22191"), "mensaje9" : "mensaje 9" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22192"), "mensaje10" : "mensaje 10" }
+{ "_id" : ObjectId("6275436959980cd1d0d376e3"), "mensaje11" : "mensaje 11" }
+{ "_id" : ObjectId("627947ea2e2a98184c261f22"), "nombre" : "mochila", "descripcion" : "30 lts", "precio" : 5000, "stock" : 0 }
+> db.mensajes.deleteOne({nombre:"mochila"})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.mensajes.find()
+{ "_id" : ObjectId("6274987f5f0f7161ffa22189"), "mensaje1" : "mensaje 1" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218a"), "mensaje2" : "mensaje 2" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218b"), "mensaje3" : "mensaje 3" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218c"), "mensaje4" : "mensaje 4" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218d"), "mensaje5" : "mensaje 5" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218e"), "mensaje6" : "mensaje 6" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218f"), "mensaje7" : "mensaje 7" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22190"), "mensaje8" : "mensaje 8" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22191"), "mensaje9" : "mensaje 9" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22192"), "mensaje10" : "mensaje 10" }
+{ "_id" : ObjectId("6275436959980cd1d0d376e3"), "mensaje11" : "mensaje 11" }
+> use ecommerce
+switched to db ecommerce
+> db.dropUser("pepe")
+true
+> use admin
+switched to db admin
+> show collection
+uncaught exception: Error: don't know how to show [collection] :
+shellHelper.show@src/mongo/shell/utils.js:1211:11
+shellHelper@src/mongo/shell/utils.js:838:15
+@(shellhelp2):1:1
+> show collections
+system.users
+system.version
+> show users
+{
+        "_id" : "admin.pepe",
+        "userId" : UUID("dd92355e-ecc1-4b1f-98f1-771ea2084ba7"),
+        "user" : "pepe",
+        "db" : "admin",
+        "roles" : [
+                {
+                        "role" : "read",
+                        "db" : "ecommerce"
+                }
+        ],
+        "mechanisms" : [
+                "SCRAM-SHA-1",
+                "SCRAM-SHA-256"
+        ]
+}
+>
+> use ecommerce
+switched to db ecommerce
+> db.productos.find()
+{ "_id" : ObjectId("627541ac59980cd1d0d376dd"), "nombre" : "transportador", "descripcion" : "azul", "precio" : 1000, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376de"), "nombre" : "saca punta", "descripcion" : "metalico", "precio" : 4000, "stock" : 0 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e1"), "nombre" : "carpeta", "descripcion" : "A3", "precio" : 2000, "stock" : 0 }
+{ "_id" : ObjectId("6275432359980cd1d0d376e2"), "nombre" : "cartuchera", "descripcion" : "1 cierre", "precio" : 2455, "stock" : 0 }
+> db.productos.insertOne({ nombre: 'mochila', descripcion: '30 lts', precio: 5000, stock:0})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("6279499652b1acc4a7dc191e")
+}
+> db.productos.find()
+{ "_id" : ObjectId("627541ac59980cd1d0d376dd"), "nombre" : "transportador", "descripcion" : "azul", "precio" : 1000, "stock" : 100 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376de"), "nombre" : "saca punta", "descripcion" : "metalico", "precio" : 4000, "stock" : 0 }
+{ "_id" : ObjectId("627541ac59980cd1d0d376e1"), "nombre" : "carpeta", "descripcion" : "A3", "precio" : 2000, "stock" : 0 }
+{ "_id" : ObjectId("6275432359980cd1d0d376e2"), "nombre" : "cartuchera", "descripcion" : "1 cierre", "precio" : 2455, "stock" : 0 }
+{ "_id" : ObjectId("6279499652b1acc4a7dc191e"), "nombre" : "mochila", "descripcion" : "30 lts", "precio" : 5000, "stock" : 0 }
+>
+
+> db.dropUser("pepe")
+false
+> use admin
+switched to db admin
+> db.dropUser("pepe")
+true
+> show users
+> db.dropUser("pepe")
+false
+
+--------CREO USUARIO ROOT Y LUEGO A PEPE--------
+
+C:\Users\msalomon>mongo -u pepe
+MongoDB shell version v5.0.8
+Enter password:
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("0953cd2a-c2a5-4aa4-bccb-d13587ad719d") }
+MongoDB server version: 5.0.8
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+> show dbs
+ecommerce  0.000GB
+> show collections
+Warning: unable to run listCollections, attempting to approximate collection names by parsing connectionStatus
+> use ecommerce
+switched to db ecommerce
+> show collections
+mensajes
+productos
+> db.mensajes.find()
+{ "_id" : ObjectId("6274987f5f0f7161ffa22189"), "mensaje1" : "mensaje 1" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218a"), "mensaje2" : "mensaje 2" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218b"), "mensaje3" : "mensaje 3" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218c"), "mensaje4" : "mensaje 4" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218d"), "mensaje5" : "mensaje 5" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218e"), "mensaje6" : "mensaje 6" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa2218f"), "mensaje7" : "mensaje 7" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22190"), "mensaje8" : "mensaje 8" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22191"), "mensaje9" : "mensaje 9" }
+{ "_id" : ObjectId("6274987f5f0f7161ffa22192"), "mensaje10" : "mensaje 10" }
+{ "_id" : ObjectId("6275436959980cd1d0d376e3"), "mensaje11" : "mensaje 11" }
+> db.mensajes.insertOne({ nombre: 'mochila', descripcion: '30 lts', precio: 5000, stock:0})
+uncaught exception: WriteCommandError({
+        "ok" : 0,
+        "errmsg" : "not authorized on ecommerce to execute command { insert: \"mensajes\", ordered: true, lsid: { id: UUID(\"0953cd2a-c2a5-4aa4-bccb-d13587ad719d\") }, $db: \"ecommerce\" }",
+        "code" : 13,
+        "codeName" : "Unauthorized"
+}) :
+WriteCommandError({
+        "ok" : 0,
+        "errmsg" : "not authorized on ecommerce to execute command { insert: \"mensajes\", ordered: true, lsid: { id: UUID(\"0953cd2a-c2a5-4aa4-bccb-d13587ad719d\") }, $db: \"ecommerce\" }",
+        "code" : 13,
+        "codeName" : "Unauthorized"
+})
+WriteCommandError@src/mongo/shell/bulk_api.js:421:48
+executeBatch@src/mongo/shell/bulk_api.js:936:23
+Bulk/this.execute@src/mongo/shell/bulk_api.js:1182:21
+DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:264:9
+@(shell):1:1
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
